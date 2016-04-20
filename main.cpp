@@ -141,6 +141,14 @@ int main()
                 cin>>min;
                 cout << "Enter movies to the year:" << endl;
                 cin>>max;
+                if(min>max)
+                {
+                    cout<<"The start year can't be greater than the end year,Please re-enter the years!"<<endl;
+                    cout << "Enter movies from the year:" << endl;
+                    cin>>min;
+                    cout << "Enter movies to the year:" << endl;
+                    cin>>max;
+                }
                 h.findMovieRange(min,max);
             }
              else
@@ -193,4 +201,5 @@ int main()
 2- do you want to add a chart or a balance?
 3- add a profit sum? //for every renting and every comic con ticket
 4-create the graph
+5-do you want to add diffrent methods of deleting ?
 */
