@@ -3,10 +3,90 @@
 #include <iostream>
 using namespace std;
 
+void create(string t,Graph *g)
+{
+    g->addVertex(t);
+}
+string menu(int c)
+{
+    string e;
+    if(c==1)
+        e="Boston";
+    else if(c==2)
+        e="Boulder";
+    else if(c==3)
+        e="Chicago";
+    else if(c==4)
+        e="Disneyland";
+    else if(c==5)
+        e="Miami";
+    else if(c==6)
+        e="New Orleans";
+    else if(c==7)
+        e="New York";
+    else if(c==8)
+        e="Portland";
+    else if(c==9)
+        e="San Francisco";
+    else if(c==10)
+        e="Seattle";
+    else 
+     e="DNE";
+    return e;
+    
+}
 int main()
 {
     HashTable h;
     Graph g;
+        vector<string>s;
+    ifstream inFile;
+    ifstream inFile2;
+    string data;
+    inFile.open("bestPlaces.txt");
+    while(getline(inFile,data))
+    {
+        string t=data.substr(0,data.find(","));
+         if(t!="cities")
+        {
+            g.addVertex(t);
+        }
+        s.push_back(t);
+    }
+    inFile2.open(argv[1]);
+    while(getline(inFile2,data))
+    {
+       string n=data.substr(0,data.find(","));
+       if(n!="cities")
+       {
+           data=data.substr(data.find(",")+1,data.size());
+           string test;
+
+          for(int i=1;i<10;i++)
+          {
+                test = data.substr(0,data.find(","));
+               if(test!="0"&&test!="-1")
+               {
+                   g.addEdge(n,s[i],atoi(test.c_str()));
+                   data=data.substr(data.find(",")+1,data.size());
+               }
+               else
+               {
+                   data=data.substr(data.find(",")+1,data.size());
+               }
+               if(data.find(",")==-1)
+               {
+                    string t2=data;
+                    if(t2!="0"&&t2!="-1")
+                    {
+                       g.addEdge(n,s[i+1],atoi(t2.c_str()));
+                    }
+               }
+          }
+       }
+
+    }
+    /////////////////////////////////////////////////
     int ch;
     cout << "======Main Menu======" << endl;
     cout << "1. Insert movie" << endl;
@@ -172,10 +252,25 @@ int main()
         }
         else if( ch==6)
         {
-            //print a menu if 2 choices either see available ones or visit all
-            //come up with cities and dates ask for which is the one he want to go to and where he lives to use graphs!
+            int c;
+            cout<<"1- Visit Boston"<<endl;
+            cout<<"2- Visit Boulder"<<endl;
+            cout<<"3- Visit Chicago"<<endl;
+            cout<<"4- Visit Disneyland"<<endl;
+            cout<<"5- Visit Miami"<<endl;
+            cout<<"6- Visit New Orleans"<<endl;
+            cout<<"7- Visit New York"<<endl;
+            cout<<"8- Visit Portland"<<endl;
+            cout<<"9- Visit San Francisco"<<endl;
+            cout<<"10- Visit Seattle"<<endl;
+            cin>>c;
+            string s;
+            cout << "Enter the city you're travelling from:" << endl;
+            cin.ignore();
+            getline(cin,s);
+            cin.clear();
             g.allOver();
-            //g.shortestPath(start,end);
+            g.shortestPath(s,menu(c));
         }
         else
         {
@@ -196,10 +291,3 @@ int main()
     cout << "Goodbye!" << endl;
     return 0;
 }
-/*
-1-add cities where they have a comic cone  then find the shortest path from ones city to the comic cone && the shortest path if one wanted to go to all comic cones
-2- do you want to add a chart or a balance?
-3- add a profit sum? //for every renting and every comic con ticket
-4-create the graph
-5-do you want to add diffrent methods of deleting ?
-*/
