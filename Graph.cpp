@@ -9,6 +9,44 @@ Graph::~Graph()
 {
     //dtor
 }
+void Graph:: BFTraversalLabel(string startingCity, int distID)
+{
+    queue <vertex*> q;
+    vertex* v =findVertex(startingCity);//the start aka Denver ..
+    v->visited=true;
+    v->distance =0;
+    v->dis=distID;
+    q.push(v);
+    while(!q.empty ())
+    {
+        vertex* n=q.front();
+        q.pop();
+        for(int x=0;x<n->adj.size();x++)//cities adjacent to n
+        {
+            if(! n->adj[x].v ->visited)//v is the pointer in the adjacent list
+            {
+                n->adj[x].v->visited=true;
+                n->adj[x].v->distance =n->distance+1;
+                n->adj[x].v->parent=n;
+                n->adj[x].v->dis=n->dis;
+                q.push(n->adj[x].v);
+            }
+        }
+    }
+}
+void Graph:: assignDistricts()
+{
+    int j=1;
+    for(int i=0;i<vertices.size();i++)
+    {
+        if(vertices[i].dis==-1)
+        {
+            BFTraversalLabel(vertices[i].name,j);
+            j+=1;
+        }
+    }
+
+}
 void Graph::addEdge(string v1, string v2, int weight)
 {
 
