@@ -39,11 +39,12 @@ int main()
 {
     HashTable h;
     Graph g;
-        vector<string>s;
+    vector<string>s;
     ifstream inFile;
     ifstream inFile2;
     string data;
     inFile.open("bestPlaces.txt");
+    g.assignDistricts();
     while(getline(inFile,data))
     {
         string t=data.substr(0,data.find(","));
@@ -270,7 +271,8 @@ int main()
             getline(cin,s);
             cin.clear();
             g.allOver();
-            g.shortestPath(s,menu(c));
+            if(c>=1&&c<=10)
+                g.shortestPath(s,menu(c));
         }
         else
         {
